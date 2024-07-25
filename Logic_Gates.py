@@ -20,6 +20,7 @@ def Logic_XOR(a, b):
 def evaluate_expression(tokens):
     result = None
     i = 0
+    prev_operator = None  # Initialize the previous operator
     while i < len(tokens):
         token = tokens[i]
         if token == '~':
