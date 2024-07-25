@@ -1,53 +1,55 @@
-# Aim: Take a Logic Gates Expression as user input. Based on the logica gates provided as input, perform the logic gate operations and display the result.
-# Logic Gates: AND (&), OR(|), NOT(~), XOR(^)
-# Constraint: Do not implement/use pre-defined symbols or functions to derive the result.
-
 # Define the logic gate functions
 
-def AND(a, b):
+def Logic_AND(a, b):
     """Returns the result of the AND gate."""
     return 1 if a == 1 and b == 1 else 0
 
-def NOT(a):
+def Logic_NOT(a):
     """Returns the result of the NOT gate."""
     return 0 if a == 1 else 1
 
-def OR(a, b):
+def Logic_OR(a, b):
     """Returns the result of the OR gate."""
     return 1 if a == 1 or b == 1 else 0
 
-def XOR(a, b):
+def Logic_XOR(a, b):
     """Returns the result of the XOR gate."""
     return 1 if a != b else 0
 
 # Function to evaluate the expression
-def evaluate_expression(expression):
-    i = 0
-    length = len(expression)
+def evaluate_expression(tokens):
     result = None
-    
-    while i < length:
-        token = expression[i]
-        
+    i = 0
+    while i < len(tokens):
+        token = tokens[i]
         if token == '~':
             i += 1
-            operand = int(expression[i])
-            result = NOT(operand)
-        elif token in ('&', '|', '^'):
-            operator = token
-            i += 1
-            operand = int(expression[i])
-            if operator == '&':
-                result = AND(result, operand)
-            elif operator == '|':
-                result = OR(result, operand)
-            elif operator == '^':
-                result = XOR(result, operand)
-        else:
+            operand = int(tokens[i])
+            operand = Logic_NOT(operand)
             if result is None:
-                result = int(token)
+                result = operand
             else:
-                result = int(token)
+                # Use previous operator to combine with result
+                if prev_operator == '&':
+                    result = Logic_AND(result, operand)
+                elif prev_operator == '|':
+                    result = Logic_OR(result, operand)
+                elif prev_operator == '^':
+                    result = Logic_XOR(result, operand)
+        elif token in ('&', '|', '^'):
+            prev_operator = token
+        else:
+            operand = int(token)
+            if result is None:
+                result = operand
+            else:
+                # Use previous operator to combine with result
+                if prev_operator == '&':
+                    result = Logic_AND(result, operand)
+                elif prev_operator == '|':
+                    result = Logic_OR(result, operand)
+                elif prev_operator == '^':
+                    result = Logic_XOR(result, operand)
         i += 1
     
     return result
