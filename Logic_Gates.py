@@ -2,19 +2,37 @@
 
 def Logic_AND(a, b):
     """Returns the result of the AND gate."""
-    return 1 if a == 1 and b == 1 else 0
+    if a == 1:
+        if b == 1:
+            return 1
+        else:
+            return 0
+    else:
+        return 0
 
 def Logic_NOT(a):
     """Returns the result of the NOT gate."""
-    return 0 if a == 1 else 1
+    if a == 1:
+        return 0
+    else:
+        return 1
 
 def Logic_OR(a, b):
     """Returns the result of the OR gate."""
-    return 1 if a == 1 or b == 1 else 0
+    if a == 1:
+        return 1
+    else:
+        if b == 1:
+            return 1
+        else:
+            return 0
 
 def Logic_XOR(a, b):
     """Returns the result of the XOR gate."""
-    return 1 if a != b else 0
+    if a != b:
+        return 1
+    else:
+        return 0
 
 # Function to evaluate the expression
 def evaluate_expression(tokens):
