@@ -6,8 +6,14 @@ Key = "CYBER"
 PlainTextASCII = [ord(char) for char in PlainText]
 #print("PlainTextASCII: ", PlainTextASCII)
 KeyASCII = [ord(char) for char in Key]
-print("KeyASCII: ",KeyASCII)
+#print("KeyASCII: ",KeyASCII)
+
 # Convert the ASCII forms of the plaintext string and key string into binary form
+PlainTextBinary = [format(char, '08b') for char in PlainTextASCII]
+print("PlainTextBinary: ",PlainTextBinary)
+KeyBinary = [format(char, '08b') for char in KeyASCII]
+print("KeyBinary: ",KeyBinary)
+
 # Perform XOR between the binary forms of the plaintext string and key string.
 # If the length of key string is shorter that the length of plain text string, repeat the the same key string for the rest of the plaintext string.
 # Proceed to find the ASCII form of the XOR result
