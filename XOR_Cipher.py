@@ -35,11 +35,15 @@ Key = "CYBER"
 
 # Convert the plaintext string and key string into their ASCII forms
 PlainTextASCII = [ord(char) for char in PlainText]
+print("PlainTextASCII: ", PlainTextASCII)
 KeyASCII = [ord(char) for char in Key]
+print("KeyASCII: ", KeyASCII)
 
 # Convert the ASCII forms of the plaintext string and key string into binary form
 PlainTextBinary = [format(char, '08b') for char in PlainTextASCII]
+print("PlainTextBinary: ", PlainTextBinary)
 KeyBinary = [format(char, '08b') for char in KeyASCII]
+print("KeyBinary: ", KeyBinary)
 
 # Perform XOR between the binary forms of the plaintext string and key string.
 # If the length of key string is shorter than the length of plain text string, repeat the key string for the rest of the plaintext string.
@@ -51,9 +55,11 @@ for i in range(len(PlainTextBinary)):
     pt_bin = PlainTextBinary[i]
     xor_bin = ''.join(str(int(a) ^ int(b)) for a, b in zip(pt_bin, key_bin))
     XORResultBinary.append(xor_bin)
+print("XORResultBinary: ", XORResultBinary)
 
 # Convert the XOR result binary to ASCII
 XORResultASCII = [int(b, 2) for b in XORResultBinary]
+print("XORResultASCII: ", XORResultASCII)
 
 # Finally, find the plain text form of the XOR result
 PlainTextResult = ''.join(chr(a) for a in XORResultASCII)
