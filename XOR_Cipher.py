@@ -15,11 +15,13 @@ KeyBinary = [format(char, '08b') for char in KeyASCII]
 #print("KeyBinary: ",KeyBinary)
 
 # Perform XOR between the binary forms of the plaintext string and key string.
-XORResult = [str(int(a) ^ int(b)) for a, b in zip(PlainTextBinary, KeyBinary)]
-print("XORResult: ", XORResult)
-
 # If the length of key string is shorter that the length of plain text string, repeat the the same key string for the rest of the plaintext string.
+XORResult = [str(int(a) ^ int(b)) for a, b in zip(PlainTextBinary, KeyBinary)]
+#print("XORResult: ", XORResult)
+
 # Proceed to find the ASCII form of the XOR result
+XORResultASCII = [chr(int(a)) for a in XORResult]
+print("XORResultASCII: ", XORResultASCII)
 # Finally, find the plain text form of the XOR result
 # Display the plain text form of the XOR Result
 
