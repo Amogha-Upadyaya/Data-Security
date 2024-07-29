@@ -31,7 +31,9 @@ print("PlainTextResult: ", PlainTextResult)
 
 # Take string "Hi class Of 2022" as plaintext and string "CYBER" as key
 PlainText = "Hi Class Of 2022"
+print("PlainText: ", PlainText)
 Key = "CYBER"
+print("Key: ", Key)
 
 # Convert the plaintext string and key string into their ASCII forms
 PlainTextASCII = [ord(char) for char in PlainText]
