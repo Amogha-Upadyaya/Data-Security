@@ -60,23 +60,3 @@ def decrypt(encrypted_message, priv_key):
     d, n = priv_key
     decrypted_message = ''.join([chr(pow(char, d, n)) for char in encrypted_message])
     return decrypted_message
-
-# Main function
-def main():
-    p = int(input("Enter a prime number p: "))
-    q = int(input("Enter another prime number q: "))
-    
-    pub_key, priv_key = generate_rsa_keys(p, q)
-    
-    print("Public Key: ", pub_key)
-    print("Private Key: ", priv_key)
-    
-    message = input("Enter a message to encrypt: ")
-    encrypted_message = encrypt(message, pub_key)
-    print("Encrypted message:", encrypted_message)
-    
-    decrypted_message = decrypt(encrypted_message, priv_key)
-    print("Decrypted message:", decrypted_message)
-
-if __name__ == "__main__":
-    main()
