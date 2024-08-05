@@ -20,27 +20,34 @@ function showDropdown(regulation) {
 
 function showContent(regulation, topic) {
     let content = '';
+    let header = '';
     switch (topic) {
         case 'scope':
             content = `${regulation.toUpperCase()} Scope: ...`; // Add specific content
+            header = 'Scope';
             break;
         case 'objective':
             content = `${regulation.toUpperCase()} Objective: ...`; // Add specific content
+            header = 'Objective';
             break;
         case 'rights-individuals':
             content = `${regulation.toUpperCase()} Rights of Individuals: ...`; // Add specific content
+            header = 'Rights of Individuals';
             break;
         case 'rights-organizations':
             content = `${regulation.toUpperCase()} Rights of Organizations: ...`; // Add specific content
+            header = 'Rights of Organizations';
             break;
         case 'consequences':
             content = `${regulation.toUpperCase()} Consequences: ...`; // Add specific content
+            header = 'Consequences';
             break;
         default:
             content = 'Select a topic from the dropdown';
+            header = '';
             break;
     }
-    document.getElementById('content-display').innerHTML = content;
+    document.getElementById('content-display').innerHTML = `<h2>${header}</h2><p>${content}</p>`;
     document.getElementById('dropdown-container').style.display = 'none';
-    document.getElementById('info-text').style.display = 'block';
+    document.getElementById('info-text').style.display = 'none';
 }
