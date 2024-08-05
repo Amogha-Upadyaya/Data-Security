@@ -31,14 +31,14 @@ nav li {
 nav button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #0761a6;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 nav button:hover {
-    background-color: #45a049;
+    background-color: #3ea1ed;
 }
 
 main {
