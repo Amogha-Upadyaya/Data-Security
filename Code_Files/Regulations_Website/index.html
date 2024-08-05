@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Regulations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Cybersecurity Regulations</h1>
+    </header>
+    <nav>
+        <ul id="regulation-list">
+            <li><button onclick="showDropdown('gdpr')">GDPR</button></li>
+            <li><button onclick="showDropdown('hipaa')">HIPAA</button></li>
+            <li><button onclick="showDropdown('pdpa')">PDPA</button></li>
+            <li><button onclick="showDropdown('lgpd')">LGPD</button></li>
+            <li><button onclick="showDropdown('ccpa')">CCPA</button></li>
+            <!-- Add more buttons for other regulations -->
+        </ul>
+    </nav>
+    <main>
+        <div id="info-text">
+            <p>Click on regulation to know more</p>
+        </div>
+        <div id="dropdown-container" style="display: none;">
+            <label for="topic-dropdown">Choose a topic:</label>
+            <select id="topic-dropdown" onchange="showContent(this.value)">
+                <option value="">Select...</option>
+                <option value="scope">Scope</option>
+                <option value="objective">Objective</option>
+                <option value="rights-individuals">Rights of Individuals</option>
+                <option value="rights-organizations">Rights of Organizations</option>
+                <option value="consequences">Consequences</option>
+            </select>
+        </div>
+        <div id="content-display">
+            <!-- Content will be displayed here based on user selection -->
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
