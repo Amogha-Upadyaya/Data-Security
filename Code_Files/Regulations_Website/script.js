@@ -35,7 +35,7 @@ function showContent(regulation, topic) {
             header = 'Rights of Individuals';
             break;
         case 'rights-organizations':
-            content = `${regulation.toUpperCase()} Rights of Organizations: ...`; // Add specific content
+            content = getRightsOrganizationsContent(regulation);
             header = 'Rights of Organizations';
             break;
         case 'consequences':
@@ -134,30 +134,75 @@ function getRightsIndividualsContent(regulation) {
                     <li>Right to Access: Individuals can access their personal data held by organizations.</li>
                     <li>Right to Correction: Individuals can request correction of inaccurate or incomplete personal data.</li>
                     <li>Right to Withdraw Consent: Individuals can withdraw consent for the collection, use, or disclosure of their personal data.</li>
-                    <li>Right to Portability: Individuals can request their data in a structured, commonly used format and transfer it to another organization.</li>
+                    <li>Right to Data Portability: Individuals can request their data in a structured format and transfer it to another organization.</li>
+                    <li>Right to Object: Individuals can object to the processing of their personal data under certain conditions.</li>
                 </ul>`;
         case 'lgpd':
             return `
                 <ul>
-                    <li>Right to Confirmation: Individuals can confirm the existence of data processing.</li>
-                    <li>Right to Access: Individuals can access their personal data.</li>
-                    <li>Right to Correction: Individuals can request correction of incomplete, inaccurate, or outdated data.</li>
-                    <li>Right to Anonymization, Blocking, or Deletion: Individuals can request anonymization, blocking, or deletion of unnecessary or excessive data, or data processed in non-compliance with the law.</li>
-                    <li>Right to Data Portability: Individuals can request their data in a structured, commonly used format and transfer it to another service or product provider.</li>
-                    <li>Right to Deletion: Individuals can request deletion of personal data processed with their consent.</li>
-                    <li>Right to Information: Individuals can request information about public and private entities with which the controller has shared data.</li>
-                    <li>Right to Withdraw Consent: Individuals can withdraw consent for data processing.</li>
-                    <li>Right to Object: Individuals can object to data processing in cases of non-compliance with the law.</li>
+                    <li>Right to Access: Individuals can access their personal data held by organizations.</li>
+                    <li>Right to Correction: Individuals can request correction of inaccurate or incomplete personal data.</li>
+                    <li>Right to Deletion: Individuals can request the deletion of their personal data under certain conditions.</li>
+                    <li>Right to Data Portability: Individuals can request their data in a structured format and transfer it to another organization.</li>
+                    <li>Right to Information: Individuals can request information about the processing of their personal data.</li>
+                    <li>Right to Object: Individuals can object to the processing of their personal data under certain conditions.</li>
                 </ul>`;
         case 'ccpa':
             return `
                 <ul>
-                    <li>Right to Know: Individuals can request to know what personal information is being collected about them.</li>
-                    <li>Right to Delete: Individuals can request the deletion of personal information held by businesses.</li>
-                    <li>Right to Opt-Out: Individuals can opt-out of the sale of their personal information.</li>
-                    <li>Right to Non-Discrimination: Individuals have the right not to be discriminated against for exercising their CCPA rights.</li>
+                    <li>Right to Know: Individuals can request information about the collection, use, and sharing of their personal data.</li>
+                    <li>Right to Delete: Individuals can request the deletion of their personal data held by organizations.</li>
+                    <li>Right to Opt-Out: Individuals can opt-out of the sale of their personal data.</li>
+                    <li>Right to Non-Discrimination: Individuals have the right to receive equal service and pricing, even if they exercise their privacy rights.</li>
                 </ul>`;
         default:
-            return 'Select a regulation to view its Rights of Individuals.';
+            return 'Select a regulation to view the rights of individuals.';
+    }
+}
+
+function getRightsOrganizationsContent(regulation) {
+    switch (regulation) {
+        case 'gdpr':
+            return `
+                <ul>
+                    <li>Right to Process Data: Organizations have the right to process personal data under lawful bases such as consent, contract, legal obligation, vital interests, public task, or legitimate interests.</li>
+                    <li>Right to Data Retention: Organizations can retain personal data as long as it is necessary for the purposes for which it was collected, within the bounds of the law.</li>
+                    <li>Right to Transfer Data: Organizations can transfer personal data to third countries or international organizations under appropriate safeguards.</li>
+                    <li>Right to Defend Claims: Organizations have the right to process personal data necessary for the establishment, exercise, or defense of legal claims.</li>
+                </ul>`;
+        case 'hipaa':
+            return `
+                <ul>
+                    <li>Right to Use and Disclose Data: Covered entities have the right to use and disclose PHI for treatment, payment, and healthcare operations without patient authorization.</li>
+                    <li>Right to Business Associate Agreements: Covered entities can share PHI with business associates who provide services, provided there are agreements ensuring PHI protection.</li>
+                    <li>Right to De-identify Data: Organizations can use and disclose de-identified health information without restrictions.</li>
+                    <li>Right to Defend Against Misconduct: Organizations have the right to use PHI for legal defense and compliance purposes.</li>
+                </ul>`;
+        case 'pdpa':
+            return `
+                <ul>
+                    <li>Right to Collect Data: Organizations can collect personal data with the individual’s consent or under specific conditions such as contractual necessity, legal obligations, or legitimate interests.</li>
+                    <li>Right to Use Data: Organizations can use personal data for purposes that individuals have been notified of and consented to, or for legitimate interests.</li>
+                    <li>Right to Data Retention: Organizations can retain personal data as long as it is necessary for business or legal purposes.</li>
+                    <li>Right to Defend Legal Claims: Organizations have the right to process personal data necessary for legal proceedings or to defend legal claims.</li>
+                </ul>`;
+        case 'lgpd':
+            return `
+                <ul>
+                    <li>Right to Process Data: Organizations can process personal data with consent or under lawful bases such as contractual necessity, legal obligations, and legitimate interests.</li>
+                    <li>Right to Use Data: Organizations can use personal data for the purposes for which it was collected and for legitimate interests.</li>
+                    <li>Right to Data Retention: Organizations can retain personal data as long as necessary for business or legal purposes.</li>
+                    <li>Right to Transfer Data: Organizations can transfer personal data to other entities under appropriate safeguards.</li>
+                </ul>`;
+        case 'ccpa':
+            return `
+                <ul>
+                    <li>Right to Collect Data: Businesses can collect personal data necessary for providing services or products.</li>
+                    <li>Right to Use Data: Businesses can use personal data for business purposes, including marketing, product development, and customer service.</li>
+                    <li>Right to Share Data: Businesses can share personal data with service providers and third parties for business purposes, provided disclosures are made to individuals.</li>
+                    <li>Right to Defend Legal Claims: Businesses have the right to use personal data necessary for legal defense and compliance with laws.</li>
+                </ul>`;
+        default:
+            return 'Select a regulation to view the rights of organizations.';
     }
 }
