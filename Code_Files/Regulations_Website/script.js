@@ -31,7 +31,7 @@ function showContent(regulation, topic) {
             header = 'Objective';
             break;
         case 'rights-individuals':
-            content = `${regulation.toUpperCase()} Rights of Individuals: ...`; // Add specific content
+            content = getRightsIndividualsContent(regulation);
             header = 'Rights of Individuals';
             break;
         case 'rights-organizations':
@@ -103,5 +103,61 @@ function getObjectiveContent(regulation) {
             return "To provide a comprehensive framework for ensuring the effectiveness of information security controls over federal information systems in the United States. It aims to protect the confidentiality, integrity, and availability of federal information systems.";
         default:
             return 'Select a regulation to view its objective.';
+    }
+}
+
+function getRightsIndividualsContent(regulation) {
+    switch (regulation) {
+        case 'gdpr':
+            return `
+                <ul>
+                    <li>Right to Access: Individuals can request access to their personal data held by organizations.</li>
+                    <li>Right to Rectification: Individuals can request correction of inaccurate or incomplete data.</li>
+                    <li>Right to Erasure (Right to be Forgotten): Individuals can request the deletion of their personal data under certain conditions.</li>
+                    <li>Right to Restrict Processing: Individuals can request the restriction of processing their personal data.</li>
+                    <li>Right to Data Portability: Individuals can request their data in a structured, commonly used format and transfer it to another organization.</li>
+                    <li>Right to Object: Individuals can object to the processing of their personal data for certain purposes, including direct marketing.</li>
+                    <li>Rights related to Automated Decision-Making: Individuals have the right to not be subject to decisions based solely on automated processing, including profiling, which has legal effects on them.</li>
+                </ul>`;
+        case 'hipaa':
+            return `
+                <ul>
+                    <li>Right to Access: Individuals can access and obtain copies of their medical records.</li>
+                    <li>Right to Correct Information: Individuals can request amendments to their medical records.</li>
+                    <li>Right to Disclosure: Individuals can request a list of disclosures of their health information.</li>
+                    <li>Right to Request Restrictions: Individuals can request restrictions on the use or disclosure of their health information.</li>
+                    <li>Right to Confidential Communications: Individuals can request to receive communications in a specific way or location.</li>
+                </ul>`;
+        case 'pdpa':
+            return `
+                <ul>
+                    <li>Right to Access: Individuals can access their personal data held by organizations.</li>
+                    <li>Right to Correction: Individuals can request correction of inaccurate or incomplete personal data.</li>
+                    <li>Right to Withdraw Consent: Individuals can withdraw consent for the collection, use, or disclosure of their personal data.</li>
+                    <li>Right to Portability: Individuals can request their data in a structured, commonly used format and transfer it to another organization.</li>
+                </ul>`;
+        case 'lgpd':
+            return `
+                <ul>
+                    <li>Right to Confirmation: Individuals can confirm the existence of data processing.</li>
+                    <li>Right to Access: Individuals can access their personal data.</li>
+                    <li>Right to Correction: Individuals can request correction of incomplete, inaccurate, or outdated data.</li>
+                    <li>Right to Anonymization, Blocking, or Deletion: Individuals can request anonymization, blocking, or deletion of unnecessary or excessive data, or data processed in non-compliance with the law.</li>
+                    <li>Right to Data Portability: Individuals can request their data in a structured, commonly used format and transfer it to another service or product provider.</li>
+                    <li>Right to Deletion: Individuals can request deletion of personal data processed with their consent.</li>
+                    <li>Right to Information: Individuals can request information about public and private entities with which the controller has shared data.</li>
+                    <li>Right to Withdraw Consent: Individuals can withdraw consent for data processing.</li>
+                    <li>Right to Object: Individuals can object to data processing in cases of non-compliance with the law.</li>
+                </ul>`;
+        case 'ccpa':
+            return `
+                <ul>
+                    <li>Right to Know: Individuals can request to know what personal information is being collected about them.</li>
+                    <li>Right to Delete: Individuals can request the deletion of personal information held by businesses.</li>
+                    <li>Right to Opt-Out: Individuals can opt-out of the sale of their personal information.</li>
+                    <li>Right to Non-Discrimination: Individuals have the right not to be discriminated against for exercising their CCPA rights.</li>
+                </ul>`;
+        default:
+            return 'Select a regulation to view its Rights of Individuals.';
     }
 }
