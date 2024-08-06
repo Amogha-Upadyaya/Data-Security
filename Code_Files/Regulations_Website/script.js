@@ -27,7 +27,7 @@ function showContent(regulation, topic) {
             header = 'Scope';
             break;
         case 'objective':
-            content = `${regulation.toUpperCase()} Objective: ...`; // Add specific content
+            content = getObjectiveContent(regulation);
             header = 'Objective';
             break;
         case 'rights-individuals':
@@ -76,5 +76,32 @@ function getScopeContent(regulation) {
             return "Federal Information Security Management Act (FISMA): Applies to U.S. federal agencies, as well as contractors and organizations that handle federal information systems. It mandates the implementation of information security programs, including risk management and security controls, to protect federal information and systems.";
         default:
             return 'Select a regulation to view its scope.';
+    }
+}
+
+function getObjectiveContent(regulation) {
+    switch (regulation) {
+        case 'gdpr':
+            return "To enhance data protection and privacy for individuals within the European Union and the European Economic Area. It aims to give individuals more control over their personal data and to standardize data protection laws across Europe.";
+        case 'hipaa':
+            return "To protect the privacy and security of individuals' medical information and to ensure the confidentiality and integrity of health information transmitted electronically.";
+        case 'pdpa':
+            return "To govern the collection, use, and disclosure of personal data in Singapore, ensuring that individuals' personal data is handled responsibly and in compliance with privacy principles.";
+        case 'lgpd':
+            return "To regulate the processing of personal data in Brazil, ensuring privacy and protection of individuals' personal information and establishing guidelines for data collection, use, and sharing.";
+        case 'ccpa':
+            return "To provide California residents with greater transparency and control over their personal data, including the right to know what personal information is being collected, the right to request deletion, and the right to opt-out of data sharing.";
+        case 'pcidss':
+            return "To enhance the security of payment card transactions by establishing a set of standards designed to protect cardholder data and prevent data breaches in the payment card industry.";
+        case 'china-cyber-law':
+            return "To strengthen cybersecurity and protect personal information and critical information infrastructure in China. It aims to ensure the security and stability of the internet and information systems.";
+        case 'iso27001':
+            return "To provide a framework for establishing, implementing, maintaining, and continually improving an information security management system (ISMS) to protect sensitive information and manage security risks.";
+        case 'nis-directive':
+            return "To improve the cybersecurity of network and information systems across the European Union, focusing on essential services and digital service providers to enhance overall resilience and response to cyber incidents.";
+        case 'fisma':
+            return "To provide a comprehensive framework for ensuring the effectiveness of information security controls over federal information systems in the United States. It aims to protect the confidentiality, integrity, and availability of federal information systems.";
+        default:
+            return 'Select a regulation to view its objective.';
     }
 }
