@@ -30,11 +30,13 @@ IP_INV = [
 # Define the key schedule
 def key_schedule(key):
     # This function should generate 16 sub-keys from the main key.
-    # For demonstration purposes, we're using a fixed sub-key here.
-    return [key] * 16
+    # For demonstration purposes, we reduce the sub-key size to 32 bits.
+    sub_keys = [key[:32] for _ in range(16)]  # Truncate to 32 bits for simplicity
+    return sub_keys
 
 # Feistel function (simplified)
 def feistel_function(right_half, sub_key):
+    # Right half is 32 bits, sub_key should also be 32 bits
     return right_half ^ sub_key  # Simplified XOR operation for demonstration
 
 # DES encryption function
