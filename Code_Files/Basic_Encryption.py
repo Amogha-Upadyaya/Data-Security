@@ -3,6 +3,7 @@
 def caesar_cipher(text, shift, mode):
     """
     Encrypts or decrypts a text using the Caesar cipher.
+
     Args:
         text: The text to be encrypted or decrypted.
         shift: The number of positions to shift the letters.
@@ -18,8 +19,8 @@ def caesar_cipher(text, shift, mode):
             offset = ord('A') if char.isupper() else ord('a')
             shifted_char = chr((ord(char) - offset + shift) % 26 + offset)
             result += shifted_char
-    else:
-        result += char
+        else:
+            result += char  # Preserve spaces and other characters
     return result
 
 def transposition_cipher(text, key):
