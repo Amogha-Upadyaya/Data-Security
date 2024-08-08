@@ -42,18 +42,20 @@ def transposition_cipher(text, key):
 
     column_count = len(key)
     row_count = (len(text) + column_count - 1) // column_count
-    cipher_text = [""] * column_count
+    cipher_text = [[''] * column_count for _ in range(row_count)]  # Create a matrix
 
     index = 0
     for row in range(row_count):
         for col in range(column_count):
             if index < len(text):
-                cipher_text[col] += text[index]
+                cipher_text[row][col] = text[index]
                 index += 1
 
     ordered_text = ""
     for col_index in key:
-        ordered_text += cipher_text[col_index - 1]
+        for row in range(row_count):
+            if row * column_count + col_index - 1 < len(text):
+                ordered_text += cipher_text[row][col_index - 1]
 
     return ordered_text
 
