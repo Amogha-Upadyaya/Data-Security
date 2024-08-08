@@ -4,8 +4,15 @@ import binascii
 
 def get_user_input():
     plaintext = input("Enter the plaintext: ")
-    key = input("Enter the 8-byte security key (in hex format, e.g., 12345678): ")
-    return plaintext, bytes.fromhex(key)
+    key_hex = input("Enter the 8-byte security key (in hex format, e.g., 12345678): ")
+    
+    try:
+        key = bytes.fromhex(key_hex)
+    except ValueError:
+        print("Error: Key must be a valid hexadecimal string.")
+        return None, None
+    
+    return plaintext, key
 
 def encrypt_des(plaintext, key):
     cipher = DES.new(key, DES.MODE_CBC)
@@ -23,9 +30,12 @@ def decrypt_des(ciphertext, key, iv):
 def main():
     plaintext, key = get_user_input()
     
+    if key is None:
+        return
+    
     # Ensure the key is 8 bytes long
     if len(key) != 8:
-        print("Error: Key must be 8 bytes long.")
+        print("Error: Key must be exactly 8 bytes long.")
         return
     
     iv, ciphertext = encrypt_des(plaintext, key)
