@@ -45,11 +45,24 @@ def transposition_cipher(text, key, mode='encrypt'):
     row_count = (len(text) + column_count - 1) // column_count
 
     if mode == 'encrypt':
-        # Encryption logic (same as before)
-        ...
+        cipher_text = [[''] * column_count for _ in range(row_count)]  # Create a matrix
+
+        index = 0
+        for row in range(row_count):
+            for col in range(column_count):
+                if index < len(text):
+                    cipher_text[row][col] = text[index]
+                    index += 1
+
+        ordered_text = ""
+        for col_index in key:
+            for row in range(row_count):
+                if row * column_count + col_index - 1 < len(text):
+                    ordered_text += cipher_text[row][col_index - 1]
+
+        return ordered_text
 
     elif mode == 'decrypt':
-        # Decryption logic
         cipher_text = [[''] * column_count for _ in range(row_count)]
 
         col_index = 0
