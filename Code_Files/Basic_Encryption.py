@@ -58,7 +58,7 @@ def transposition_cipher(text, key):
         ordered_text = ""
         for col_index in key:
             for row in range(row_count):
-                if row * column_count + col_index - 1 < len(text):
+                if row * column_count + col_index - 1 < len(text) and cipher_text[row][col_index - 1] != '':
                     ordered_text += cipher_text[row][col_index - 1]
 
         return ordered_text
