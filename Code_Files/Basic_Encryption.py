@@ -28,18 +28,19 @@ def caesar_cipher(text, shift, mode):
             result += char  # Preserve spaces and other characters
     return result
 
-def transposition_cipher(text, key, mode='encrypt'):
+def transposition_cipher(text, key):
     """
     Encrypts or decrypts a text using the transposition cipher.
 
     Args:
         text: The text to be encrypted or decrypted.
         key: The key used for encryption/decryption.
-        mode: 'encrypt' or 'decrypt'.
 
     Returns:
         The encrypted or decrypted text.
     """
+
+    mode = input("Enter mode (encrypt/decrypt): ")
 
     column_count = len(key)
     row_count = (len(text) + column_count - 1) // column_count
