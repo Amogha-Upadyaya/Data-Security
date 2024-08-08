@@ -1,0 +1,1 @@
+# Design a programming code to encrypt and decrypt AES algorithm. Describe the working of AES. Compare and contrast the AES and DES algorithm 
