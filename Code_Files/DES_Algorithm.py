@@ -90,12 +90,10 @@ if __name__ == "__main__":
     padded_plaintext_input = pad(plaintext_input)
     
     # Convert to binary arrays
-    plaintext = string_to_bin_array(padded_plaintext_input)[:64]  # Use only the first 64 bits for simplicity
+    plaintext = string_to_bin_array(padded_plaintext_input)  # No need to truncate to 64 bits, pad handles it
     key = string_to_bin_array(key_input)[:64]  # Use only the first 64 bits for simplicity
     
     # Pad if needed
-    while len(plaintext) < 64:
-        plaintext = np.append(plaintext, 0)
     while len(key) < 64:
         key = np.append(key, 0)
 
