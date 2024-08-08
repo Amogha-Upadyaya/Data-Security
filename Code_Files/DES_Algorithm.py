@@ -1,9 +1,24 @@
 import numpy as np
 
+# Convert string to binary representation
+def string_to_bin_array(s):
+    bin_array = []
+    for char in s:
+        bin_value = bin(ord(char))[2:].zfill(8)  # Convert each character to an 8-bit binary
+        bin_array.extend([int(bit) for bit in bin_value])
+    return np.array(bin_array)
+
+# Convert binary array to string
+def bin_array_to_string(bin_array):
+    chars = []
+    for i in range(0, len(bin_array), 8):
+        byte = bin_array[i:i+8]
+        byte_str = ''.join(str(bit) for bit in byte)
+        chars.append(chr(int(byte_str, 2)))
+    return ''.join(chars)
+
 # Permutation and Substitution Tables (simplified for demonstration)
 # Actual DES tables are much more complex and defined in DES standard
-
-# Initial Permutation (IP) table
 IP = [
     58, 50, 42, 34, 26, 18, 10, 2,
     60, 52, 44, 36, 28, 20, 12, 4,
@@ -15,7 +30,6 @@ IP = [
     63, 55, 47, 39, 31, 23, 15, 7
 ]
 
-# Final Permutation (IP-1) table
 IP_INV = [
     40, 8, 48, 16, 56, 24, 64, 32,
     39, 7, 47, 15, 55, 23, 63, 31,
@@ -27,74 +41,59 @@ IP_INV = [
     33, 1, 41, 9, 49, 17, 57, 25
 ]
 
-# Define the key schedule
 def key_schedule(key):
-    # This function should generate 16 sub-keys from the main key.
-    # For demonstration purposes, we reduce the sub-key size to 32 bits.
     sub_keys = [key[:32] for _ in range(16)]  # Truncate to 32 bits for simplicity
     return sub_keys
 
-# Feistel function (simplified)
 def feistel_function(right_half, sub_key):
-    # Right half is 32 bits, sub_key should also be 32 bits
     return right_half ^ sub_key  # Simplified XOR operation for demonstration
 
-# DES encryption function
 def des_encrypt(plaintext, key):
-    # Initial Permutation
     permuted_text = np.array([plaintext[i - 1] for i in IP])
-    
-    # Split into left and right halves
     left_half = permuted_text[:32]
     right_half = permuted_text[32:]
-    
     sub_keys = key_schedule(key)
-    
     for i in range(16):
-        # Feistel function
         temp = feistel_function(right_half, sub_keys[i])
-        
-        # Swap halves
         left_half, right_half = right_half, left_half ^ temp
-    
-    # Combine halves and apply final permutation
     combined = np.concatenate([left_half, right_half])
     ciphertext = np.array([combined[i - 1] for i in IP_INV])
-    
     return ciphertext
 
-# DES decryption function (inverse of encryption)
 def des_decrypt(ciphertext, key):
-    # Initial Permutation
     permuted_text = np.array([ciphertext[i - 1] for i in IP])
-    
-    # Split into left and right halves
     left_half = permuted_text[:32]
     right_half = permuted_text[32:]
-    
-    sub_keys = key_schedule(key)[::-1]  # Reverse the key schedule for decryption
-    
+    sub_keys = key_schedule(key)[::-1]
     for i in range(16):
-        # Feistel function
         temp = feistel_function(right_half, sub_keys[i])
-        
-        # Swap halves
         left_half, right_half = right_half, left_half ^ temp
-    
-    # Combine halves and apply final permutation
     combined = np.concatenate([left_half, right_half])
     plaintext = np.array([combined[i - 1] for i in IP_INV])
-    
     return plaintext
 
-# Example usage
 if __name__ == "__main__":
-    key = np.random.randint(0, 2, size=64)  # 64-bit key
-    plaintext = np.random.randint(0, 2, size=64)  # 64-bit plaintext
+    # Get user input for plaintext and key
+    plaintext_input = input("Enter the plaintext: ")
+    key_input = input("Enter the key (at least 8 characters): ")
+    
+    # Convert to binary arrays
+    plaintext = string_to_bin_array(plaintext_input)[:64]  # Use only the first 64 bits for simplicity
+    key = string_to_bin_array(key_input)[:64]  # Use only the first 64 bits for simplicity
+    
+    # Pad if needed
+    while len(plaintext) < 64:
+        plaintext = np.append(plaintext, 0)
+    while len(key) < 64:
+        key = np.append(key, 0)
 
+    # Encrypt and Decrypt
     ciphertext = des_encrypt(plaintext, key)
     decrypted_text = des_decrypt(ciphertext, key)
 
-    print("Plaintext: ", plaintext)
-    print("Ciphertext:", ciphertext)
-    print("Decrypted:", decrypted_text)
+    # Convert back to string
+    decrypted_message = bin_array_to_string(decrypted_text)
+
+    print("Plaintext: ", plaintext_input)
+    print("Ciphertext:", ''.join(map(str, ciphertext)))
+    print("Decrypted:", decrypted_message.strip())
