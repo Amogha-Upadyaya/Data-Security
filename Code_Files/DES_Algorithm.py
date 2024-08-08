@@ -1,49 +1,32 @@
 from Crypto.Cipher import DES
-from Crypto.Util.Padding import pad, unpad
-import binascii
+from Crypto import Random
 
-def get_user_input():
-    plaintext = input("Enter the plaintext: ")
-    key_hex = input("Enter the 8-byte security key (in hex format, e.g., 12345678): ")
-    
-    try:
-        key = bytes.fromhex(key_hex)
-    except ValueError:
-        print("Error: Key must be a valid hexadecimal string.")
-        return None, None
-    
-    return plaintext, key
+def pad(text):
+    """Pads the text to a multiple of 8 bytes."""
+    return text + (b' ' * (8 - len(text) % 8))
 
-def encrypt_des(plaintext, key):
-    cipher = DES.new(key, DES.MODE_CBC)
-    plaintext_bytes = plaintext.encode('utf-8')
-    padded_plaintext = pad(plaintext_bytes, DES.block_size)
-    ciphertext = cipher.encrypt(padded_plaintext)
-    return cipher.iv, ciphertext
+def encrypt(key, plaintext):
+    """Encrypts the plaintext using DES in ECB mode."""
+    key = key.encode('ascii')
+    plaintext = pad(plaintext.encode('ascii'))
+    des = DES.new(key, DES.MODE_ECB)
+    return des.encrypt(plaintext)
 
-def decrypt_des(ciphertext, key, iv):
-    cipher = DES.new(key, DES.MODE_CBC, iv)
-    padded_plaintext = cipher.decrypt(ciphertext)
-    plaintext_bytes = unpad(padded_plaintext, DES.block_size)
-    return plaintext_bytes.decode('utf-8')
+def decrypt(key, ciphertext):
+    """Decrypts the ciphertext using DES in ECB mode."""
+    key = key.encode('ascii')
+    des = DES.new(key, DES.MODE_ECB)
+    return des.decrypt(ciphertext).rstrip()
 
 def main():
-    plaintext, key = get_user_input()
-    
-    if key is None:
-        return
-    
-    # Ensure the key is 8 bytes long
-    if len(key) != 8:
-        print("Error: Key must be exactly 8 bytes long.")
-        return
-    
-    iv, ciphertext = encrypt_des(plaintext, key)
-    decrypted_text = decrypt_des(ciphertext, key, iv)
-    
-    print(f"Original Plaintext: {plaintext}")
-    print(f"Encrypted Text (hex): {binascii.hexlify(ciphertext).decode('utf-8')}")
-    print(f"Decrypted Text: {decrypted_text}")
+    key = input("Enter the encryption key (8 characters): ")
+    plaintext = input("Enter the plaintext: ")
+
+    ciphertext = encrypt(key, plaintext)
+    print("Encrypted text:", ciphertext)
+
+    decrypted_text = decrypt(key, ciphertext).decode('ascii')
+    print("Decrypted text:", decrypted_text)
 
 if __name__ == "__main__":
     main()
