@@ -17,7 +17,12 @@ def caesar_cipher(text, shift, mode):
     for char in text:
         if char.isalpha():
             offset = ord('A') if char.isupper() else ord('a')
-            shifted_char = chr((ord(char) - offset + shift) % 26 + offset)
+            if mode == 'encrypt':
+                shifted_char = chr((ord(char) - offset + shift) % 26 + offset)
+            elif mode == 'decrypt':
+                shifted_char = chr((ord(char) - offset - shift) % 26 + offset)
+            else:
+                raise ValueError("Invalid mode")
             result += shifted_char
         else:
             result += char  # Preserve spaces and other characters
