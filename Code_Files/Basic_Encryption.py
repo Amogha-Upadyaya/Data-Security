@@ -39,10 +39,10 @@ def transposition_cipher(text, key, mode):
     Returns:
         The encrypted or decrypted text.
     """
-    if mode == 'encrypt':
-        column_count = len(key)
-        row_count = (len(text) + column_count - 1) // column_count
+    column_count = len(key)
+    row_count = (len(text) + column_count - 1) // column_count
 
+    if mode == 'encrypt':
         cipher_text = [[''] * column_count for _ in range(row_count)]
 
         index = 0
@@ -53,7 +53,7 @@ def transposition_cipher(text, key, mode):
                     index += 1
 
         ordered_text = ""
-        for col_index in sorted(range(len(key)), key=lambda k: key[k]):
+        for col_index in sorted(range(column_count), key=lambda k: key[k] - 1):
             for row in range(row_count):
                 if cipher_text[row][col_index] != '':
                     ordered_text += cipher_text[row][col_index]
@@ -61,13 +61,10 @@ def transposition_cipher(text, key, mode):
         return ordered_text
 
     elif mode == 'decrypt':
-        column_count = len(key)
-        row_count = (len(text) + column_count - 1) // column_count
-
         cipher_text = [[''] * column_count for _ in range(row_count)]
 
         index = 0
-        for col_index in sorted(range(len(key)), key=lambda k: key[k]):
+        for col_index in sorted(range(column_count), key=lambda k: key[k] - 1):
             for row in range(row_count):
                 if index < len(text):
                     cipher_text[row][col_index] = text[index]
@@ -78,22 +75,26 @@ def transposition_cipher(text, key, mode):
             for col in range(column_count):
                 decrypted_text += cipher_text[row][col]
 
-        return decrypted_text
+        return decrypted_text.strip()
 
     else:
         raise ValueError("Invalid mode")
 
-def rot13_cipher(text):
+def rot13_cipher(text, mode='encrypt'):
     """
     Encrypts or decrypts a text using the ROT13 cipher.
 
     Args:
         text: The text to be encrypted or decrypted.
+        mode: 'encrypt' or 'decrypt'. Since ROT13 is symmetric, this is optional.
 
     Returns:
         The encrypted or decrypted text.
     """
-    return caesar_cipher(text, 13, 'encrypt')
+    if mode not in ['encrypt', 'decrypt']:
+        raise ValueError("Invalid mode")
+
+    return caesar_cipher(text, 13, mode)
 
 def main():
     text = input("Enter the text: ")
@@ -110,13 +111,11 @@ def main():
         result = transposition_cipher(text, key, mode)
     
     elif choice == 3:
-        result = rot13_cipher(text)
+        mode = input("Enter mode (encrypt/decrypt): ")
+        result = rot13_cipher(text, mode)
     
     else:
         print("Invalid choice!")
         return  # Exit the program
 
     print("Result:", result)
-
-if __name__ == "__main__":
-    main()
