@@ -119,3 +119,6 @@ def main():
         return  # Exit the program
 
     print("Result:", result)
+
+if __name__ == "__main__":
+    main()
