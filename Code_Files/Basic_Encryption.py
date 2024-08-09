@@ -12,7 +12,6 @@ def caesar_cipher(text, shift, mode):
     Returns:
         The encrypted or decrypted text.
     """
-
     result = ""
     for char in text:
         if char.isalpha():
@@ -28,25 +27,23 @@ def caesar_cipher(text, shift, mode):
             result += char  # Preserve spaces and other characters
     return result
 
-def transposition_cipher(text, key):
+def transposition_cipher(text, key, mode):
     """
     Encrypts or decrypts a text using the transposition cipher.
 
     Args:
         text: The text to be encrypted or decrypted.
         key: The key used for encryption/decryption.
+        mode: 'encrypt' or 'decrypt'.
 
     Returns:
         The encrypted or decrypted text.
     """
-
-    mode = input("Enter mode (encrypt/decrypt): ")
-
-    column_count = len(key)
-    row_count = (len(text) + column_count - 1) // column_count
-
     if mode == 'encrypt':
-        cipher_text = [[''] * column_count for _ in range(row_count)]  # Create a matrix
+        column_count = len(key)
+        row_count = (len(text) + column_count - 1) // column_count
+
+        cipher_text = [[''] * column_count for _ in range(row_count)]
 
         index = 0
         for row in range(row_count):
@@ -56,24 +53,25 @@ def transposition_cipher(text, key):
                     index += 1
 
         ordered_text = ""
-        for col_index in key:
+        for col_index in sorted(range(len(key)), key=lambda k: key[k]):
             for row in range(row_count):
-                if row * column_count + col_index - 1 < len(text) and cipher_text[row][col_index - 1] != '':
-                    ordered_text += cipher_text[row][col_index - 1]
+                if cipher_text[row][col_index] != '':
+                    ordered_text += cipher_text[row][col_index]
 
         return ordered_text
 
     elif mode == 'decrypt':
+        column_count = len(key)
+        row_count = (len(text) + column_count - 1) // column_count
+
         cipher_text = [[''] * column_count for _ in range(row_count)]
 
-        col_index = 0
-        row_index = 0
-        for char in text:
-            cipher_text[row_index][key[col_index] - 1] = char
-            col_index += 1
-            if col_index == column_count:
-                col_index = 0
-                row_index += 1
+        index = 0
+        for col_index in sorted(range(len(key)), key=lambda k: key[k]):
+            for row in range(row_count):
+                if index < len(text):
+                    cipher_text[row][col_index] = text[index]
+                    index += 1
 
         decrypted_text = ""
         for row in range(row_count):
@@ -81,6 +79,7 @@ def transposition_cipher(text, key):
                 decrypted_text += cipher_text[row][col]
 
         return decrypted_text
+
     else:
         raise ValueError("Invalid mode")
 
@@ -94,7 +93,6 @@ def rot13_cipher(text):
     Returns:
         The encrypted or decrypted text.
     """
-
     return caesar_cipher(text, 13, 'encrypt')
 
 def main():
@@ -107,8 +105,9 @@ def main():
         result = caesar_cipher(text, shift, mode)
     
     elif choice == 2:
-        key = list(map(int, input("Enter the key (column numbers): ").split()))
-        result = transposition_cipher(text, key)
+        key = list(map(int, input("Enter the key (column numbers, e.g., 1 2 3): ").split()))
+        mode = input("Enter mode (encrypt/decrypt): ")
+        result = transposition_cipher(text, key, mode)
     
     elif choice == 3:
         result = rot13_cipher(text)
