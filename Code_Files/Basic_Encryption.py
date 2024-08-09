@@ -33,7 +33,7 @@ def transposition_cipher(text, key, mode):
 
     Args:
         text: The text to be encrypted or decrypted.
-        key: The key used for encryption/decryption.
+        key: The key used for encryption/decryption, a list of column indices.
         mode: 'encrypt' or 'decrypt'.
 
     Returns:
@@ -42,43 +42,44 @@ def transposition_cipher(text, key, mode):
     column_count = len(key)
     row_count = (len(text) + column_count - 1) // column_count
 
+    # Padding text to fit the grid if necessary
+    padded_text = text.ljust(row_count * column_count)
+
     if mode == 'encrypt':
-        cipher_text = [[''] * column_count for _ in range(row_count)]
+        # Create matrix for encryption
+        matrix = [list(padded_text[i * column_count:(i + 1) * column_count]) for i in range(row_count)]
 
-        index = 0
-        for row in range(row_count):
-            for col in range(column_count):
-                if index < len(text):
-                    cipher_text[row][col] = text[index]
-                    index += 1
+        # Create encrypted text by reading columns in the order specified by the key
+        encrypted_text = ""
+        for col_index in key:
+            for row in matrix:
+                if col_index - 1 < len(row):
+                    encrypted_text += row[col_index - 1]
 
-        ordered_text = ""
-        for col_index in sorted(range(column_count), key=lambda k: key[k] - 1):
-            for row in range(row_count):
-                if cipher_text[row][col_index] != '':
-                    ordered_text += cipher_text[row][col_index]
-
-        return ordered_text
+        return encrypted_text
 
     elif mode == 'decrypt':
-        cipher_text = [[''] * column_count for _ in range(row_count)]
+        # Create matrix for decryption
+        matrix = [[''] * column_count for _ in range(row_count)]
 
+        # Fill columns in the order specified by the key
         index = 0
-        for col_index in sorted(range(column_count), key=lambda k: key[k] - 1):
+        for col_index in key:
             for row in range(row_count):
                 if index < len(text):
-                    cipher_text[row][col_index] = text[index]
+                    matrix[row][col_index - 1] = text[index]
                     index += 1
 
+        # Create decrypted text by reading rows
         decrypted_text = ""
-        for row in range(row_count):
-            for col in range(column_count):
-                decrypted_text += cipher_text[row][col]
+        for row in matrix:
+            decrypted_text += ''.join(row)
 
-        return decrypted_text.strip()
+        return decrypted_text.rstrip()  # Remove any padding added during encryption
 
     else:
-        raise ValueError("Invalid mode")
+        raise ValueError("Invalid mode. Use 'encrypt' or 'decrypt'.")
+
 
 def rot13_cipher(text, mode='encrypt'):
     """
